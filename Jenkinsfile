@@ -2,6 +2,7 @@ pipeline{
     agent any
     environment{
         NEW_VERSION='1.4.0'
+        SEVER_CREDENTIALS=credentials('pipeline-cred')
     }
     stages{
         stage("build"){
@@ -28,6 +29,8 @@ pipeline{
         stage("deploy"){
             steps{
                 echo " Branch name ${env.BRANCH_NAME}"
+                echo " deploying with ${SEVER_CREDENTIALS}"
+                
                echo " Deploy Stage"
             }
         }
