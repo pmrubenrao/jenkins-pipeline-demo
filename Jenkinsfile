@@ -29,7 +29,7 @@ pipeline{
         stage("deploy"){
             steps{
                 echo " Branch name ${env.BRANCH_NAME}"
-                withCredentails([
+                withCredentials([
                     usernamePassword(credentials:'pipeline-cred', usernameVariable: USER, passwordVariable: PWD)
                 ]){
                     sh "display.sh ${USER} ${PWD}"
