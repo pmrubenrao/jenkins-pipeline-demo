@@ -1,8 +1,8 @@
-// CODE_CHANGES = getGitChanges()
 pipeline{
     agent any
     environment{
         NEW_VERSION='1.4.0'
+    }
     stages{
         stage("build"){
             when{
