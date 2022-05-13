@@ -1,7 +1,7 @@
 pipeline{
     agent any
     parameters{
-        string(name: 'VERSION', defaultValue:'', desc='description')
+//         string(name: 'VERSION', defaultValue:'', desc='description')
         choice(name: 'VERSION',choices:['1.1.0','1.2.0', '1.3.0'], description:' choioces' )
         booleanParam(name:'executeTests', defaultValue:true, description:'boolean')
     }
@@ -34,7 +34,7 @@ pipeline{
         }
         stage("deploy"){
             steps{
-                echo "Deploying version ${VERSION}"
+                echo "Deploying version ${params.VERSION}"
                 // echo " Branch name ${env.BRANCH_NAME}"
                 withCredentials([usernamePassword(credentialsId: 'pipeline-cred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
 
