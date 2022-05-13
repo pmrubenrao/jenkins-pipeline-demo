@@ -29,8 +29,12 @@ pipeline{
         stage("deploy"){
             steps{
                 echo " Branch name ${env.BRANCH_NAME}"
-                echo " deploying with ${SEVER_CREDENTIALS}"
-                
+                withCredentails([
+                    usernamePassword(credentials:'pipeline-cred', usernameVariable: USER, passwordVariable: PWD)
+                ]){
+                    sh "display.sh ${USER} ${PWD}"
+                }
+               
                echo " Deploy Stage"
             }
         }
