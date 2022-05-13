@@ -1,21 +1,24 @@
 // CODE_CHANGES = getGitChanges()
 pipeline{
     agent any
+    environment{
+        NEW_VERSION='1.4.0'
     stages{
         stage("build"){
             when{
                expression {
-                    BRANCH_NAME == 'main' || BRANCH_NAME == 'master'
+                    env.BRANCH_NAME == 'main' || env.BRANCH_NAME == 'master'
                 }
             }
             steps{
                 echo " Build Stage"
+                echo " Building version ${NEW_VERSION}
             }
         }
         stage("test"){
             when {
                 expression {
-                    BRANCH_NAME == 'main' || BRANCH_NAME == 'master'
+                    env.BRANCH_NAME == 'main' || env.BRANCH_NAME == 'master'
                 }
             }
             steps{
