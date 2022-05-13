@@ -27,6 +27,7 @@ pipeline{
         }
         stage("deploy"){
             steps{
+                echo " Branch name ${env.BRANCH_NAME}"
                echo " Deploy Stage"
             }
         }
