@@ -29,11 +29,14 @@ pipeline{
         stage("deploy"){
             steps{
                 echo " Branch name ${env.BRANCH_NAME}"
-                withCredentials([
-                    usernamePassword(credentials:'pipeline-cred', usernameVariable: USER, passwordVariable: PWD)
-                ]){
-                    sh "display.sh ${USER} ${PWD}"
-                }
+                withCredentials([usernamePassword(credentialsId: 'pipeline-cred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+
+  sh 'echo $PASSWORD'
+  // also available as a Groovy variable
+  echo USERNAME
+  // or inside double quotes for string interpolation
+  echo "username is $USERNAME"
+}
                
                echo " Deploy Stage"
             }
