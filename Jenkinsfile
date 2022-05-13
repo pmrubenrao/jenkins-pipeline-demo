@@ -1,5 +1,10 @@
 pipeline{
     agent any
+    parameters{
+        string(name: 'VERSION', defaultValue:'', desc='description')
+        choice(name: 'VERSION',choices:['1.1.0','1.2.0', '1.3.0'], description:' choioces' )
+        booleanParam(name:'executeTests', defaultValue:true, description:'boolean')
+    }
     environment{
         NEW_VERSION='1.4.0'
         SEVER_CREDENTIALS=credentials('pipeline-cred')
@@ -19,7 +24,8 @@ pipeline{
         stage("test"){
             when {
                 expression {
-                    env.BRANCH_NAME == 'main' || env.BRANCH_NAME == 'master'
+                    // env.BRANCH_NAME == 'main' || env.BRANCH_NAME == 'master'
+                    params.executeTests
                 }
             }
             steps{
@@ -28,7 +34,8 @@ pipeline{
         }
         stage("deploy"){
             steps{
-                echo " Branch name ${env.BRANCH_NAME}"
+                echo "Deploying version ${VERSION}"
+                // echo " Branch name ${env.BRANCH_NAME}"
                 withCredentials([usernamePassword(credentialsId: 'pipeline-cred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
 
   sh 'echo $PASSWORD'
