@@ -1,3 +1,4 @@
+def gv
 pipeline{
     agent any
     parameters{
@@ -10,42 +11,26 @@ pipeline{
         SEVER_CREDENTIALS=credentials('pipeline-cred')
     }
     stages{
-        stage("build"){
-            when{
-               expression {
-                    env.BRANCH_NAME == 'main' || env.BRANCH_NAME == 'master'
+        stage(Initialization){
+            steps{
+                script {
+                    gv = load "script.groovy"
                 }
             }
-            steps{
-                echo " Build Stage"
-                echo " Building version ${NEW_VERSION}"
+        }
+        stage("build"){
+           steps{
+               gv.buildApp()
             }
         }
         stage("test"){
-            when {
-                expression {
-                    // env.BRANCH_NAME == 'main' || env.BRANCH_NAME == 'master'
-                    params.executeTests
-                }
-            }
-            steps{
-                echo " test Stage"
+           steps{
+               gv.testApp()
             }
         }
         stage("deploy"){
             steps{
-                echo "Deploying version ${params.VERSION}"
-                // echo " Branch name ${env.BRANCH_NAME}"
-                withCredentials([usernamePassword(credentialsId: 'pipeline-cred', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-
-  sh 'echo $PASSWORD'
-  // also available as a Groovy variable
-  echo USERNAME
-  // or inside double quotes for string interpolation
-  echo "username is $USERNAME"
-}
-               
-               echo " Deploy Stage"
+               gv.deployApp()
             }
         }
         
