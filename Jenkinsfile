@@ -11,7 +11,7 @@ pipeline{
         SEVER_CREDENTIALS=credentials('pipeline-cred')
     }
     stages{
-        stage(Initialization){
+        stage("Initialization"){
             steps{
                 script {
                     gv = load "script.groovy"
