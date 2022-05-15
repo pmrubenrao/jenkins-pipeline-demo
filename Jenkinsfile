@@ -4,7 +4,7 @@ pipeline{
     parameters{
 //         string(name: 'VERSION', defaultValue:'', desc='description')
         choice(name: 'VERSION',choices:['1.1.0','1.2.0', '1.3.0'], description:' choioces' )
-        choice(name:'Deplot-to:',choices["INT","PRE-PROD","PROD"])
+        choice(name:'DEPLOY_TO',choices:["INT","PRE","PROD"])
         booleanParam(name:'executeTests', defaultValue:true, description:'boolean')
     }
     environment{
@@ -44,19 +44,19 @@ pipeline{
                     stage("INT") {
                     when { expression { params.DEPLOY_TO == "INT" } }
                     steps {
-                        sh "./deploy int"
+                        echo "Deploying on INT env"
                     }
                 }
                 stage("PRE") {
                     when { expression { params.DEPLOY_TO == "PRE" } }
                     steps {
-                        sh "./deploy.sh pre"
+                        echo "Deploying on PRE-PROD env"
                     }
                 }
                 stage("PROD") {
                     when { expression { params.DEPLOY_TO == "PROD" } }
                     steps {
-                        sh "./deploy.sh prod"
+                        echo "Deploying on PROD env"
                     }
                 }
             }
