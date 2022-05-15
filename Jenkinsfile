@@ -35,11 +35,11 @@ pipeline{
             
         }
         stage("deploy"){
-            steps{
-               script {
-                    gv.deployApp()
-               }               
-            }
+            // steps{
+            //    script {
+            //         gv.deployApp()
+            //    }               
+            // }
              parallel{
                     stage("INT") {
                     when { expression { params.DEPLOY_TO == "INT" } }
