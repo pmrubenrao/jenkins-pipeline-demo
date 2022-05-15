@@ -4,7 +4,7 @@ pipeline{
     parameters{
 //         string(name: 'VERSION', defaultValue:'', desc='description')
         choice(name: 'VERSION',choices:['1.1.0','1.2.0', '1.3.0'], description:' choioces' )
-        choice(name:'Deplot-to: 'choices["INT","PRE-PROD","PROD"])
+        choice(name:'Deplot-to:',choices["INT","PRE-PROD","PROD"])
         booleanParam(name:'executeTests', defaultValue:true, description:'boolean')
     }
     environment{
